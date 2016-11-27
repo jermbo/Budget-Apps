@@ -1,0 +1,276 @@
+///// Colors //////
+$gray-lighter: #FFFDFD;
+$gray-light: #CBD2D0;
+$gray-medium: #7C7C7C;
+$gray-dark: #36393B;
+$gray-darker: #131112;
+$red: #dd1839;
+$green: #0ad1b9;
+$blue: #369ac9;
+///// Colors //////
+
+@import url('https://fonts.googleapis.com/css?family=Oxygen:300,400,700');
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #f6f8f9 0%, #e5ebee 50%, #d7dee3 51%, #f5f7f9 100%);
+  position: relative;
+  font-family: 'Oxygen', sans-serif;
+  font-size: 16px;
+  margin: 0;
+}
+
+.app {
+  position: absolute;
+  width: 480px;
+  height: 700px;
+  background: #f5f5f5;
+  box-shadow: 0 10px 25px -5px rgba($gray-darker, 0.35);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.app__header {
+  background: $blue;
+  padding: 25px;
+  border-radius: 10px 10px 0 0;
+}
+
+.app__title {
+  text-transform: uppercase;
+  text-align: center;
+  color: $gray-darker;
+  letter-spacing: 2px;
+  margin: 0 0 15px;
+  position: absolute;
+  width: 100%;
+  top: -50px;
+  left: 0;
+}
+
+.app__info {
+  background: $gray-lighter;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 5px rgba($gray-darker, 0.35);
+  display: flex;
+  > div {
+    flex: 1 250px;
+    text-align: center;
+    padding: 20px;
+    height: 120px;
+  }
+  p {
+    margin: 0; 
+  }
+} 
+
+.date {
+  background: linear-gradient(-155deg, #5883d3 0%, #3953a8 100%);
+  height: 100%;
+  color: white;
+  border-radius: 5px 0 0 5px;
+}
+
+.date__num {
+  font-size: 45px;
+}
+
+.date__month {
+  font-size: 20px;
+}
+
+.display__title {
+  text-transform: uppercase;
+  color: $gray-medium;
+}
+
+.display__total {
+  color: $green;
+  font-size: 30px;
+  padding: 10px 0;
+  &--exp {
+    color: $red;
+  }
+
+  small{
+    display: block;
+    background: rgba($red, 0.5);
+    font-size: 12px;
+    padding: 5px;
+    color: $gray-lighter;
+  }
+}
+
+.app__form {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 25px;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: $blue;
+    z-index: -1;
+    top: -15px;
+    left: 0;
+  }
+  input {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    box-shadow: inset 0 2px 5px rgba($gray-darker, 0.35);
+    border-radius: 5px;
+    flex: 1 150px;
+    margin-bottom: 10px;
+    &:first-child {
+      margin-right: 10px;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  button {
+    flex: 1 150px;
+    background: $green;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 0;
+    color: $gray-lighter;
+    letter-spacing: 2px;
+    box-shadow: 0 0 5px 0px rgba($gray-darker, 0.35);
+    transition: all .25s ease;
+    
+    &:not(:last-child){
+      margin-right: 10px;
+    }
+    
+    &:last-child{
+      background: $red;
+    }
+    
+    &:hover {
+      box-shadow: 0 5px 10px -2px rgba($gray-darker, 0.35);
+    }
+    
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.app__items {
+  padding: 10px 0;
+  &--inner {
+    overflow-x: scroll;
+    height: 415px;
+  }
+}
+
+.item {
+  @include clearfix();
+  padding: 25px;
+  border-bottom: 1px solid $gray-medium;
+  position: relative;
+  &:first-child {
+    border-top: 1px solid $gray-medium;
+  }
+  &:nth-child(even) {
+    background: $gray-lighter;
+  }
+  &:before {
+    content: '';
+    width: 5px;
+    height: 100%;
+    background: $green;
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  &--exp {
+    &:before {
+      background: $red;
+    }
+  }
+  &:hover {
+    .item__action button {
+      opacity: 1;
+    }
+    .item__value,
+    .item__percentage {
+      transform: translate(-25px);
+    }
+  }
+}
+
+.item__desc {
+  float: left;
+}
+
+.item__right {
+  float: right;
+  text-align: right;
+  width: 150px;
+}
+
+.item__value {
+  float: right;
+  transition: transform .35s ease;
+  color: $green;
+  .item--exp & {
+    color: $red;
+  }
+}
+
+.item__action {
+  button {
+    transition: all .25s ease;
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 1;
+    opacity: 0;
+    position: absolute;
+    right: 25px;
+    &:hover {
+      color: $red;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.item__percentage {
+  float: left;
+  margin-left: 20px;
+  transition: transform 0.3s;
+  font-size: 11px;
+  background-color: #FFDAD9;
+  padding: 3px;
+  border-radius: 3px;
+  width: 32px;
+  text-align: center;
+}

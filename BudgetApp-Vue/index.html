@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bugdet App - Vue.js</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	
+<div id="budgetApp" class="app">
+  
+  <div class="app__header">
+    <h1 class="app__title">Budget App</h1>
+    <div class="app__info">
+      <div class="date">
+        <p class="date__num">{{currentDay}}</p>
+        <p class="date__month">{{currentMonth}}</p>
+      </div><!-- /display -->
+      <div class="display">
+        <p class="display__title">Income</p>
+        <p class="display__total display__total--inc">${{getTotal('inc')}}</p>
+      </div><!-- /display -->
+      <div class="display">
+        <p class="display__title">Expense</p>
+        <p class="display__total display__total--exp">${{getTotal('exp')}} <small>{{expPrecent}}</small></p>
+      </div><!-- /display -->
+    </div><!-- /app__info -->
+  </div><!-- /app__header -->
+  
+  <div class="app__form">
+    <input type="number" placeholder="$0.00" v-model="input.value"/>
+    <input type="text" placeholder="Description" v-model="input.desc"/>
+    <button @click="addItem('inc')">Add Income</button>
+    <button @click="addItem('exp')">Add Expense</button>
+  </div><!-- /app__form -->
+
+  <div class="app__items">
+    <div class="app__items--inner">
+
+			<budget-item v-for="(item, index) in items" v-on:remove="removeItem('inc', index)" :id="index" :type="item.type" :desc="item.desc" :value="item.value"></budget-item>
+			
+    </div><!-- /app__items--inner -->
+  </div><!-- /app__items -->
+
+</div><!-- /app -->
+
+<template id="item">
+	<div v-bind:id="type + '-' + id" class="item" v-bind:class="'item--' + type">
+		<div class="item__desc">{{desc}}</div>
+		<div class="item__right">
+		  <div class="item__value">{{value}}</div>
+		  <div class="item__action">
+		    <button @click="$emit('remove')" class="item__delete"><i class="fa fa-times-circle"></i></button>
+		  </div>
+		</div>
+	</div>
+</template>	
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.0/vue.min.js"></script>
+<script src="budgetApp.js"></script>
+</body>
+</html>
